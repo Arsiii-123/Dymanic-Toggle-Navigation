@@ -1,0 +1,417 @@
+:root {
+    --bg: #f3f6f4;
+    --surface: #ffffff;
+    --ink: #14302b;
+    --muted: #5d7570;
+    --accent: #0f766e;
+    --accent-soft: #d5ece8;
+    --line: #d9e2df;
+    --overlay: rgba(10, 30, 26, .45);
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --bg: #0d1a18;
+        --surface: #142623;
+        --ink: #e6f2ef;
+        --muted: #93aca6;
+        --accent: #2dd4bf;
+        --accent-soft: #1c3b36;
+        --line: #244039;
+        --overlay: rgba(0, 0, 0, .6);
+    }
+}
+
+:root[data-theme="dark"] {
+    --bg: #0d1a18;
+    --surface: #142623;
+    --ink: #e6f2ef;
+    --muted: #93aca6;
+    --accent: #2dd4bf;
+    --accent-soft: #1c3b36;
+    --line: #244039;
+    --overlay: rgba(0, 0, 0, .6);
+}
+
+html {
+    scroll-padding-top: env(safe-area-inset-top, 0px)
+}
+
+* {
+    box-sizing: border-box
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+    line-height: 1.6;
+    min-height: 100vh
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0 0 auto;
+    height: env(safe-area-inset-top, 0px);
+    background: var(--surface);
+    z-index: 30
+}
+
+/* Header */
+.header {
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    z-index: 20;
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: .8rem 1.25rem
+}
+
+.logo {
+    font-weight: 700;
+    font-size: 1.2rem;
+    letter-spacing: .3px;
+    color: var(--ink);
+    text-decoration: none
+}
+
+.logo span {
+    color: var(--accent)
+}
+
+/* Nav links */
+.nav {
+    display: flex;
+    align-items: center;
+    gap: .4rem
+}
+
+.nav a {
+    position: relative;
+    color: var(--muted);
+    text-decoration: none;
+    padding: .5rem .9rem;
+    border-radius: 8px;
+    font-size: .95rem;
+    transition: color .25s ease, background-color .25s ease, transform .2s ease
+}
+
+.nav a::after {
+    content: "";
+    position: absolute;
+    left: .9rem;
+    right: .9rem;
+    bottom: .25rem;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .3s ease
+}
+
+.nav a:hover {
+    color: var(--ink);
+    background: var(--accent-soft)
+}
+
+.nav a:hover::after {
+    transform: scaleX(1)
+}
+
+.nav a.active {
+    color: var(--accent);
+    background: var(--accent-soft);
+    font-weight: 700
+}
+
+.nav a.active::after {
+    transform: scaleX(1)
+}
+
+.nav a:active {
+    transform: scale(.96)
+}
+
+.nav a:focus-visible,
+.toggle:focus-visible,
+.cta:focus-visible,
+.close:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px
+}
+
+.cta {
+    background: var(--accent);
+    color: var(--bg);
+    border: 0;
+    border-radius: 999px;
+    padding: .55rem 1.2rem;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform .2s ease, box-shadow .25s ease, filter .2s ease
+}
+
+.cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(15, 118, 110, .35);
+    filter: brightness(1.08)
+}
+
+.cta:active {
+    transform: translateY(0) scale(.97)
+}
+
+/* Hamburger */
+.toggle {
+    display: none;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    border-radius: 10px;
+    cursor: pointer;
+    position: relative;
+    transition: background-color .25s ease
+}
+
+.toggle:hover {
+    background: var(--accent-soft)
+}
+
+.toggle span {
+    position: absolute;
+    left: 11px;
+    right: 11px;
+    height: 2px;
+    background: var(--ink);
+    border-radius: 2px;
+    transition: transform .35s ease, opacity .25s ease, top .35s ease
+}
+
+.toggle span:nth-child(1) {
+    top: 14px
+}
+
+.toggle span:nth-child(2) {
+    top: 21px
+}
+
+.toggle span:nth-child(3) {
+    top: 28px
+}
+
+.toggle.open span:nth-child(1) {
+    top: 21px;
+    transform: rotate(45deg)
+}
+
+.toggle.open span:nth-child(2) {
+    opacity: 0;
+    transform: translateX(-10px)
+}
+
+.toggle.open span:nth-child(3) {
+    top: 21px;
+    transform: rotate(-45deg)
+}
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: var(--overlay);
+    opacity: 0;
+    visibility: hidden;
+    z-index: 15;
+    transition: opacity .35s ease, visibility .35s
+}
+
+.overlay.show {
+    opacity: 1;
+    visibility: visible
+}
+
+.drawer-head {
+    display: none
+}
+
+/* Mobile drawer */
+@media (max-width:760px) {
+    .toggle {
+        display: block
+    }
+
+    .header .cta.desktop {
+        display: none
+    }
+
+    .nav {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: min(78vw, 300px);
+        z-index: 50;
+        background: var(--surface);
+        flex-direction: column;
+        align-items: stretch;
+        gap: .25rem;
+        padding: 1rem 1rem calc(1rem + env(safe-area-inset-bottom, 0px));
+        border-left: 1px solid var(--line);
+        transform: translateX(100%);
+        transition: transform .4s cubic-bezier(.22, .8, .25, 1);
+        box-shadow: -10px 0 30px rgba(0, 0, 0, .15)
+    }
+
+    .nav.open {
+        transform: translateX(0)
+    }
+
+    .drawer-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: env(safe-area-inset-top, 0px) .25rem .8rem;
+        border-bottom: 1px solid var(--line);
+        margin-bottom: .6rem;
+        font-weight: 700
+    }
+
+    .close {
+        border: 0;
+        background: transparent;
+        color: var(--ink);
+        font-size: 1.6rem;
+        line-height: 1;
+        cursor: pointer;
+        border-radius: 8px;
+        padding: .1rem .5rem;
+        transition: background-color .2s
+    }
+
+    .close:hover {
+        background: var(--accent-soft)
+    }
+
+    .nav a {
+        padding: .8rem 1rem;
+        font-size: 1.05rem;
+        opacity: 0;
+        transform: translateX(20px)
+    }
+
+    .nav.open a {
+        opacity: 1;
+        transform: translateX(0);
+        transition: opacity .35s ease, transform .35s ease, color .25s, background-color .25s
+    }
+
+    .nav.open a:nth-of-type(1) {
+        transition-delay: .12s, .12s, 0s, 0s
+    }
+
+    .nav.open a:nth-of-type(2) {
+        transition-delay: .18s, .18s, 0s, 0s
+    }
+
+    .nav.open a:nth-of-type(3) {
+        transition-delay: .24s, .24s, 0s, 0s
+    }
+
+    .nav.open a:nth-of-type(4) {
+        transition-delay: .30s, .30s, 0s, 0s
+    }
+
+    .nav a::after {
+        display: none
+    }
+
+    .nav .cta {
+        margin-top: auto;
+        width: 100%;
+        padding: .8rem
+    }
+}
+
+@media (min-width:761px) {
+    .nav .cta.mobile {
+        display: none
+    }
+}
+
+/* Content */
+main {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 3rem 1.25rem 5rem
+}
+
+section {
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--line)
+}
+
+section:last-child {
+    border-bottom: 0
+}
+
+h1 {
+    font-size: clamp(1.9rem, 5vw, 2.8rem);
+    line-height: 1.15;
+    margin: 0 0 .6rem
+}
+
+h2 {
+    margin: 0 0 .5rem;
+    font-size: 1.5rem
+}
+
+p {
+    color: var(--muted);
+    margin: 0;
+    max-width: 60ch
+}
+
+.hint {
+    margin-top: 1rem;
+    font-size: .9rem;
+    padding: .7rem 1rem;
+    border-left: 3px solid var(--accent);
+    background: var(--accent-soft);
+    color: var(--ink);
+    border-radius: 0 8px 8px 0
+}
+
+.theme {
+    position: fixed;
+    right: 1rem;
+    bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+    z-index: 10;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--ink);
+    border-radius: 999px;
+    padding: .5rem .9rem;
+    font: inherit;
+    font-size: .85rem;
+    cursor: pointer;
+    transition: background-color .25s
+}
+
+.theme:hover {
+    background: var(--accent-soft)
+}
+
+@media (prefers-reduced-motion:reduce) {
+    * {
+        transition-duration: .01ms !important
+    }
+}

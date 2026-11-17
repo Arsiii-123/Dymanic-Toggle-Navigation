@@ -1,0 +1,62 @@
+<!-- Pynexia Frontend Internship | Dynamic Toggle Navigation | By: Aapka Naam -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Dynamic Toggle Navigation</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <header class="header">
+    <a class="logo" href="#home">Nav<span>Flow</span></a>
+
+    <button class="toggle" id="toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="nav" id="nav" aria-label="Main">
+      <div class="drawer-head"><span>Menu</span><button class="close" id="close"
+          aria-label="Close menu">&times;</button></div>
+      <a href="#home" class="active">Home</a>
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#contact">Contact</a>
+      <button class="cta" id="cta">Get started</button>
+    </nav>
+  </header>
+
+  <div class="overlay" id="overlay"></div>
+
+  <main>
+    <section id="home">
+      <h1>Dynamic Toggle Navigation</h1>
+      <p>Built by Arslan for the Pynexia Frontend Internship. This project shows a responsive menu with a hamburger
+        drawer, smooth hover effects and active link highlighting.</p>
+      <div class="hint">Try it: open the menu, click a link, press Esc, or tap the dark area to close it.</div>
+    </section>
+    <section id="about">
+      <h2>About</h2>
+      <p>This page uses event listeners to toggle classes, CSS transitions for every movement, and DOM updates to keep
+        the active link in sync as you scroll.</p>
+    </section>
+    <section id="services">
+      <h2>Services</h2>
+      <p>Hover each link to see the underline grow. Press a link to feel the small scale effect. The active page is
+        highlighted automatically.</p>
+    </section>
+    <section id="contact">
+      <h2>Contact</h2>
+      <p>The drawer closes by itself after you pick a link, and the page scrolls to the right section.</p>
+    </section>
+  </main>
+
+  <button class="theme" id="theme">Toggle theme</button>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
